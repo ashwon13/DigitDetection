@@ -61,7 +61,7 @@ for col in range (42000):#there are 42000 columns these are all the images and a
     for row in range (10):#goes into the the row of the column(still filled with zero) if the row number equals the column then
         if (val==row):
             train_label[val,col]=1 # then set it to one
-# TWO DISTINCTIONS TRAIN_LABELS WITH A S LABELS IS 42000 x 1 but TRAIN_LABEL NO S is basically a vector eg if the label was 3 it would look like
+# TWO DISTINCTIONS TRAIN_LABELS WITH A S LABELS IS 42000 x 1 but TRAIN_LABEL NO S is basically a vector 10x42,000 eg if the label was 3 it would look like
 #0   if this is one it means the image is a 0
 #0   if this is one it means the image is a 1
 #0
