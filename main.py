@@ -29,7 +29,7 @@ plt.imshow(train_data[index].reshape(28,28), cmap=cm.binary) #gets the rest of t
 #  
 #column 
 plt.show()#shows the graph
-print("train data")#Werid print statement
+print("train data")#Weird print statement
 y_value=np.zeros((1,10))#creates a 1x10 array of zeros this is 
 print(y_value)
 for i in range (10):
@@ -46,9 +46,9 @@ plt.bar(x_value,y_value,0.7,color='g')#0.7 is width between bars
 plt.show()
 
 
-print(train_data.shape) #(42000, 784)
+print(train_data.shape) #(42000, 784) 1x784 array
 train_data=np.reshape(train_data,[784,42000]) #don't be an idiot like me all this line of code does is
-#go from hab=ving all the pixel values for image be 753x1 to 1x753 by switching the rows with the columns to make a 
+#go from having all the pixel values for image be 753x1 to 1x753 by switching the rows with the columns to make a 
 #1x753 vector
 print(train_data)
 #VECTORIZE IT
@@ -61,7 +61,7 @@ for col in range (42000):#there are 42000 columns these are all the images and a
     for row in range (10):#goes into the the row of the column(still filled with zero) if the row number equals the column then
         if (val==row):
             train_label[val,col]=1 # then set it to one
-# TWO DISTINCTIONS TRAIN_LABELS WITH A S LABELS IS 42000 x 1 but TRAIN_LABEL NO S is basically a vector 10x42,000 eg if the label was 3 it would look like
+# TWO DISTINCTIONS TRAIN_LABELS WITH A S LABELS IS 42000 x 1 but TRAIN_LABEL NO S is basically a vector eg if the label was 3 it would look like
 #0   if this is one it means the image is a 0
 #0   if this is one it means the image is a 1
 #0
@@ -76,8 +76,35 @@ for col in range (42000):#there are 42000 columns these are all the images and a
 print("train_data shape="+str(np.shape(train_data))) #gets size of data
 print("train_label shape="+str(np.shape(train_label))) #gets size of label which should be 10x42,000
 
+def relu(Z):
+    A = np.maximum(0,Z)    #This is it. This is the ReLU function, returns 0 is the array is less than zero or returns the array if it is larger than 0 
+    #But this is in a matrix so it just replaces all values less than 0 with 0
+    cache = Z 
+    return A, cache #returns Z and np.maximum(0,z)
+    #this code replaces all the 0s with negatives
 
+def relu_backward(dA, cache): #What is this? lets figure it out 
+    Z = cache # Sets z to chache
+    dZ = np.array(dA, copy=True) #VERY IMPORTANT we simply cannot do dZ=dA this would set dZ as the reference object so if we dZ we change dA or if we change dA we change dZ
+    dZ[Z <= 0] = 0 #Replaces all occurances lesss than and equal to zero to zero
+    #IN Some cases you may see an addional line that says
+    
+    #remember what a derivative is it's just the slope of a line at a certian point. so the slope if the thing is 0 or negative is 0. But if it's positive in the relu funciton is the input is greather than 0
+    #then the opput is the input if you plot it it shows that the slope is constant and looks very close to a y=x that's because it is a y=x graph making it 
+    #the slope 1
+    #thus you may see this line of code
+    #dZ[Z>0]=1
+    #Thats all there is to the code if it is greater than 0 it doesn't need to be touched cuz the "right" side is linear
+    assert (dZ.shape == Z.shape) # makes sure that the sizes are equal (basically a breakpoint) if the shapes are equal we continue with the code else we stops the program and throw an error
+    return dZ #Return the deriviate of Z
+    #This code replaces all the negatives with 0s
 
+test=np.array([-1,2,3])
+test=np.reshape(test,(3,1))
+temp1,c=relu(test)
+temp2=relu_backward(temp1,c)
+print(str(temp1))
+print(str(temp2))
 
 
 
